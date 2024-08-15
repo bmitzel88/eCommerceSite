@@ -31,7 +31,7 @@ namespace eCommerceSite.Models
         /// The company does not sell anything newer then 1990
         /// </summary>
         [Range(1800, 1990)]
-        public double Year { get; set; }
+        public int Year { get; set; }
 
         //Todo: Add rating
     }
