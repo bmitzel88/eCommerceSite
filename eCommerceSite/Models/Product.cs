@@ -2,7 +2,7 @@
 
 namespace eCommerceSite.Models
 {
-    
+
     /// <summary>
     /// Represents a single product available for purchase
     /// </summary>
@@ -13,7 +13,7 @@ namespace eCommerceSite.Models
         /// </summary>
         [Key]
         public int ProductID { get; set; }
-        
+
         /// <summary>
         /// The title of the vintage product
         /// </summary>
@@ -25,6 +25,13 @@ namespace eCommerceSite.Models
         /// </summary>
         [Range(0, 100_000)]
         public double Price { get; set; }
+
+        /// <summary>
+        /// The manufacturing year of the vintage product
+        /// The company does not sell anything newer then 1990
+        /// </summary>
+        [Range(1800, 1990)]
+        public int Year { get; set; }
 
         //Todo: Add rating
     }
