@@ -10,6 +10,8 @@ namespace eCommerceSite.Controllers
     {
         private readonly VintageContext _context;
 
+
+
         public CatalogController(VintageContext context)
         {
             _context = context;
@@ -18,7 +20,11 @@ namespace eCommerceSite.Controllers
         [HttpGet]
         public IActionResult Shop()
         {
-            return View();
+            // Get all products from the database
+            List<Product> products = _context.Products.ToList();
+            
+            
+            return View(products);
         }
 
         [HttpGet]
