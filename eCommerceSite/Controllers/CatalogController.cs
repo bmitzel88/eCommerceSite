@@ -34,18 +34,6 @@ namespace eCommerceSite.Controllers
             return View();
         }
 
-
-        public async Task<IActionResult> Edit(int id) // This ID was set to the product in the CatalogController
-        {
-            Product? productToEdit = await _context.Products.FindAsync(id);
-
-            if (productToEdit == null) 
-            {
-                return NotFound();
-            }
-            return View(productToEdit);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Create(Product product)
         {
@@ -63,6 +51,33 @@ namespace eCommerceSite.Controllers
 
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id) // This ID was set to the product in the CatalogController
+        {
+            Product? productToEdit = await _context.Products.FindAsync(id);
+
+            if (productToEdit == null)
+            {
+                return NotFound();
+            }
+            return View(productToEdit);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Product productModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Products.Update(productModel);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Shop");
+            }
+
+            return View(productModel);
+        }
 
 
 

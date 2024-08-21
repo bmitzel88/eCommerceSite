@@ -11,10 +11,6 @@ builder.Services.AddDbContext<VintageContext>(options =>
 
 builder.Services.AddControllersWithViews();
 
-// Register the DbContext with the DI container
-builder.Services.AddDbContext<VintageContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
