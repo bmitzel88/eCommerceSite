@@ -80,7 +80,37 @@ namespace eCommerceSite.Controllers
             return View(productModel);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Product productToDelete = await _context.Products.FindAsync(id);
+
+            if (productToDelete == null)
+            {
+                return NotFound();
+            }
+
+            return View(productToDelete);
+        }
 
 
+        [HttpPost, ActionName("Delete")] // This to get around not posting and C# syntax
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+
+            Product productToDelete = await _context.Products.FindAsync(id);
+
+            if (productToDelete != null)
+            {
+                _context.Products.Remove(productToDelete);
+                await _context.SaveChangesAsync();
+                TempData["Message"] = productToDelete.Title + " was deleted successfully";
+
+                return RedirectToAction("Shop");
+            }
+
+            TempData["Message"] = " This product was already deleted";
+            return RedirectToAction("Shop");
+        }
     }
 }
