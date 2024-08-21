@@ -73,6 +73,7 @@ namespace eCommerceSite.Controllers
                 _context.Products.Update(productModel);
                 await _context.SaveChangesAsync();
 
+                TempData["Message"] = $"{productModel.Title} was updated successfully";
                 return RedirectToAction("Shop");
             }
 
