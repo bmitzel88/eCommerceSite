@@ -34,6 +34,18 @@ namespace eCommerceSite.Controllers
             return View();
         }
 
+
+        public async Task<IActionResult> Edit(int id) // This ID was set to the product in the CatalogController
+        {
+            Product? productToEdit = await _context.Products.FindAsync(id);
+
+            if (productToEdit == null) 
+            {
+                return NotFound();
+            }
+            return View(productToEdit);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(Product product)
         {
