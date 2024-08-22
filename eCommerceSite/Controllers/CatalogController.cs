@@ -112,5 +112,22 @@ namespace eCommerceSite.Controllers
             TempData["Message"] = " This product was already deleted";
             return RedirectToAction("Shop");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            Product productDetails = await _context.Products.FindAsync(id);
+
+            if (productDetails == null)
+            {
+                return NotFound();
+            }
+
+
+            return View(productDetails);
+        }
+
+
+
     }
 }
