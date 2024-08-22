@@ -113,7 +113,7 @@ namespace eCommerceSite.Controllers
             return RedirectToAction("Shop");
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             Product productDetails = await _context.Products.FindAsync(id);
@@ -126,5 +126,8 @@ namespace eCommerceSite.Controllers
 
             return View(productDetails);
         }
+
+
+
     }
 }
