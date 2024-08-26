@@ -14,5 +14,13 @@ namespace eCommerceSite.Data
 
         public DbSet<Member> Members { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RegisterViewModel>().HasNoKey();
+
+            base.OnModelCreating(modelBuilder);
+        }
+        public DbSet<eCommerceSite.Models.RegisterViewModel> RegisterViewModel { get; set; } = default!;
+
     }
 }
