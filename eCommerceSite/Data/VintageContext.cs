@@ -18,9 +18,12 @@ namespace eCommerceSite.Data
         {
             modelBuilder.Entity<RegisterViewModel>().HasNoKey();
 
+            modelBuilder.Entity<LoginViewModel>().HasNoKey();
+
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<eCommerceSite.Models.RegisterViewModel> RegisterViewModel { get; set; } = default!;
+        public DbSet<eCommerceSite.Models.LoginViewModel> LoginViewModel { get; set; } = default!;
 
     }
 }
