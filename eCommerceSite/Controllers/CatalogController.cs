@@ -1,6 +1,7 @@
 ﻿using eCommerceSite.Data;
 using eCommerceSite.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 
@@ -18,10 +19,20 @@ namespace eCommerceSite.Controllers
         }
 
         [HttpGet]
-        public IActionResult Shop()
+        public async Task<IActionResult> Shop(int? id)
         {
+            const int NumProductsToDisplayPerPage = 3;
+            const int PageOffset = 1; // Need a page offset to use current page and figure out number of products to skip
+            //                boolean  ? if true  : if false
+            int currPage = id.HasValue ? id.Value : 1;
+
+
             // Get all products from the database
-            List<Product> products = _context.Products.ToList();
+            List<Product> products = await (from product in _context.Products
+                                            select product)
+                                            .Skip(NumProductsToDisplayPerPage * (currPage - PageOffset))
+                                            .Take(NumProductsToDisplayPerPage)
+                                            .ToListAsync();
             
             
             return View(products);
