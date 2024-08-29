@@ -7,9 +7,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<VintageContext>(options => 
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+// Allow session access in Views 
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddHttpContextAccessor();
+
+
 //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
+
+
+// Add session 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
+
 
 var app = builder.Build();
 
@@ -23,10 +36,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+// Apply session
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
 	name: "default",

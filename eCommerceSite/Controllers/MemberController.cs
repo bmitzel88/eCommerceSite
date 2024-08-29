@@ -42,6 +42,43 @@ namespace eCommerceSite.Controllers
 
             return View(regModel);
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginViewModel loginModel)
+        {
+            if (ModelState.IsValid)
+            {
+                // Check DB for credentials
+                Member? m = (from member in _context.Members
+                           where member.Email == loginModel.Email && 
+                                member.Password == loginModel.Password
+                           select member).SingleOrDefault();
+                
+                // If exists send to home page loggin in
+                if (m != null)
+                {
+                    HttpContext.Session.SetString("Email", loginModel.Email);
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError("checkCredentials", "Credentials not found");
+            }
+            // Return page if no record found
+            return View(loginModel);
+        }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
         
     }
 }
