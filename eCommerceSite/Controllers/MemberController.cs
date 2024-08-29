@@ -72,6 +72,13 @@ namespace eCommerceSite.Controllers
             // Return page if no record found
             return View(loginModel);
         }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
         
     }
 }

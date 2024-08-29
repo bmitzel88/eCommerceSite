@@ -36,13 +36,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+// Apply session
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();
-
-// Apply session
-app.UseSession();
 
 
 app.MapControllerRoute(
