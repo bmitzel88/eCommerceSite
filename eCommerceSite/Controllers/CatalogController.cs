@@ -23,8 +23,13 @@ namespace eCommerceSite.Controllers
         {
             const int NumProductsToDisplayPerPage = 3;
             const int PageOffset = 1; // Need a page offset to use current page and figure out number of products to skip
+            
             //                boolean  ? if true  : if false
             int currPage = id.HasValue ? id.Value : 1;
+
+            int totalNumOfProducts = await _context.Products.CountAsync();
+            double maxNumPages = Math.Ceiling((double)totalNumOfProducts / NumProductsToDisplayPerPage);
+            int lastPage = Convert.ToInt32(maxNumPages); // Rounds pages up to the next whole page number
 
 
             // Get all products from the database
@@ -33,9 +38,10 @@ namespace eCommerceSite.Controllers
                                             .Skip(NumProductsToDisplayPerPage * (currPage - PageOffset))
                                             .Take(NumProductsToDisplayPerPage)
                                             .ToListAsync();
+
+            CatalogViewModel catalogModel = new(products, lastPage, currPage);
             
-            
-            return View(products);
+            return View(catalogModel);
         }
 
         [HttpGet]
